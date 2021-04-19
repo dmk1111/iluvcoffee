@@ -9,6 +9,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module';
 import { CommonModule } from './common/common.module';
 import appConfig from './config/app.config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -20,20 +21,7 @@ import appConfig from './config/app.config';
         DATABASE_PORT: Joi.number().default(5432),
       }),
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('database.host'),
-        port: configService.get<number>('database.port'),
-        username: configService.get('DATABASE_USER'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
-        autoLoadEntities: true,
-        synchronize: true, // for development only. Disable for prod & use migrations instead
-      }),
-      inject: [ConfigService],
-    }),
+    MongooseModule.forRoot('mongodb://localhost:27017/nest-course'),
     CoffeeRatingModule,
     DatabaseModule,
     CommonModule,

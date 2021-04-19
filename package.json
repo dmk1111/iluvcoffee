@@ -18,10 +18,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "pretest:e2e": "docker-compose up -d test-db",
+    "pretest:e2e": "docker-compose up -d test-postgres-db",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:e2e:coffees": "yarn run test:e2e -- coffees",
-    "posttest:e2e": "docker-compose stop test-db && docker-compose rm -f test-db"
+    "posttest:e2e": "docker-compose stop test-postgres-db && docker-compose rm -f test-postgres-db"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -29,11 +29,13 @@
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",
     "@nestjs/mapped-types": "^0.4.1",
+    "@nestjs/mongoose": "^7.2.4",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "^7.1.5",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "mongoose": "^5.12.4",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

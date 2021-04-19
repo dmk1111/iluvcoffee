@@ -4,7 +4,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
-import { Flavor } from './entities/flavor.entity';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -21,10 +20,6 @@ describe('CoffeesService', () => {
       providers: [
         CoffeesService,
         { provide: Connection, useValue: {} },
-        {
-          provide: getRepositoryToken(Flavor),
-          useValue: createMockRepository(),
-        },
         {
           provide: getRepositoryToken(Coffee),
           useValue: createMockRepository(),
@@ -43,7 +38,7 @@ describe('CoffeesService', () => {
   describe('findOne', () => {
     describe('when coffee with ID exists', () => {
       it('should return the coffee object', async () => {
-        const coffeeId = 1;
+        const coffeeId = '1';
         const expectedCoffee = {};
 
         coffeeRepository.findOne.mockReturnValue(expectedCoffee);
@@ -54,7 +49,7 @@ describe('CoffeesService', () => {
 
     describe('otherwise', () => {
       it('should throw the "NotFoundException"', async () => {
-        const coffeeId = 1;
+        const coffeeId = '1';
         coffeeRepository.findOne.mockReturnValue(undefined);
 
         try {

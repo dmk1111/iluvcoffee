@@ -35,7 +35,7 @@ export class CoffeesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Coffee> {
+  findOne(@Param('id') id: string): Promise<Coffee> {
     return this.coffeesService.findOne(id);
   }
 
@@ -46,14 +46,14 @@ export class CoffeesController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() updateCoffeeDto: UpdateCoffeeDto,
   ): Promise<Coffee> {
     return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<Coffee> {
+  remove(@Param('id') id: string): Promise<Coffee> {
     return this.coffeesService.remove(id);
   }
 }
